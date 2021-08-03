@@ -1,3 +1,4 @@
+
 {
   'use strict';
   const select = {
@@ -71,7 +72,7 @@
 
     initActions() {
       const thisBooksList = this;
-      const filters = [];
+
       const bookImages = document.querySelectorAll('.books-list  .book__image');
       console.log(bookImages);
       for (let bookImage of bookImages) {
@@ -83,26 +84,28 @@
 
           if (!bookImage.classList.contains(classNames.book.favoriteImage)) {
             bookImage.classList.add(classNames.book.favoriteImage);
-            thisBooksList.favouriteBooks.push(bookImage);
-          } else if (bookImage.classList.contains(classNames.book.favoriteImage)) {
+            thisBooksList.favoriteBooks.push(bookImage);
+          } else {
             bookImage.classList.remove(classNames.book.favoriteImage);
-            thisBooksList.favouriteBooks.splice(thisBooksList.favouriteBooks.indexOf(bookImage), 1);
+            thisBooksList.favoriteBooks.splice(thisBooksList.favoriteBooks.indexOf(bookImage), 1);
           }
-          console.log(thisBooksList.favouriteBooks);
+          console.log(thisBooksList.favoriteBooks);
         });
-        thisBooksList.dom.form.addEventListener('click', function (event) {
-          //event.preventDefault();
-          const checkbox = event.target;
-          if (checkbox.tagName === 'INPUT' && checkbox.type === 'checkbox' && checkbox.name === 'filter') {
-            if (checkbox.checked === true) {
-              thisBooksList.filters.push(checkbox.value);
-            } else if (checkbox.checked === false) {
-              thisBooksList.filters.splice(thisBooksList.filters.indexOf(checkbox.value), 1);
-            }
-          }
-          thisBooksList.filterBooks();
-        });
+
       }
+      thisBooksList.dom.form.addEventListener('click', function (event) {
+        //event.preventDefault();
+
+        const checkbox = event.target;
+        if (checkbox.tagName === 'INPUT' && checkbox.type === 'checkbox' && checkbox.name === 'filter') {
+          if (checkbox.checked) {
+            thisBooksList.filters.push(checkbox.value);
+          } else {
+            thisBooksList.filters.splice(thisBooksList.filters.indexOf(checkbox.value), 1);
+          }
+        }
+        thisBooksList.filterBooks();
+      });
     }
 
     filterBooks() {
@@ -120,7 +123,7 @@
 
         if (shouldBeHidden) {
           bookImage.classList.add(classNames.book.hidden);
-        } else if (!shouldBeHidden) {
+        } else {
           bookImage.classList.remove(classNames.book.hidden);
         }
       }
@@ -143,5 +146,6 @@
   }
 
 
+  // eslint-disable-next-line no-unused-vars
   const app = new BooksList();
 }

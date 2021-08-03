@@ -41,7 +41,6 @@
       const thisBooksList = this;
       thisBooksList.data = dataSource.books;
       for (let book of thisBooksList.data) {
-
         const ratingBgc = thisBooksList.determineRatingBgc(book.rating);
         const ratingWidth = book.rating * 10;
         const bookData = {
@@ -73,10 +72,8 @@
     initActions() {
       const thisBooksList = this;
       thisBooksList.dom.booksList.addEventListener('dblclick', function (event) {
-        event.preventDefault();
-
+        //event.preventDefault();
         const bookImage = event.target.offsetParent;
-
         if (bookImage.classList.contains(select.bookProperties.image)) {
           const favoriteBook = bookImage.classList.contains(classNames.book.favoriteBook);
           if (!favoriteBook) {
@@ -90,9 +87,7 @@
       });
 
       thisBooksList.dom.form.addEventListener('click', function (event) {
-
-        event.preventDefault();
-
+        //event.preventDefault();
         const checkbox = event.target;
         if (checkbox.tagName === 'INPUT' && checkbox.type === 'checkbox' && checkbox.name === 'filter') {
           if (checkbox.checked === true) {
@@ -127,6 +122,7 @@
     }
 
     determineRatingBgc(rating) {
+
       let background = '';
 
       if (rating < 6) {
@@ -144,5 +140,4 @@
 
   // eslint-disable-next-line no-unused-vars
   const app = new BooksList();
-
 }

@@ -37,7 +37,6 @@
       thisBooksList.getElements();
       thisBooksList.initActions();
     }
-
     initData() {
       const thisBooksList = this;
       thisBooksList.data = dataSource.books;
@@ -71,59 +70,47 @@
       thisBooksList.dom.booksList = document.querySelector(select.listOf.books);
       thisBooksList.dom.form = document.querySelector(select.form);
     }
-
     initActions() {
       const thisBooksList = this;
-      const filters = [];
-      const bookImages = document.querySelectorAll('.books-list  .book__image');
-      console.log(bookImages);
-      for (let bookImage of bookImages) {
-        console.log(bookImage);
-        bookImage.addEventListener('dblclick', function (event) {
-          event.preventDefault();
-
-
-
-          if (!bookImage.classList.contains(classNames.book.favoriteImage)) {
-            bookImage.classList.add(classNames.book.favoriteImage);
-            thisBooksList.favouriteBooks.push(bookImage);
-          } else if (bookImage.classList.contains(classNames.book.favoriteImage)) {
-            bookImage.classList.remove(classNames.book.favoriteImage);
-            thisBooksList.favouriteBooks.splice(thisBooksList.favouriteBooks.indexOf(bookImage), 1);
+      thisBooksList.dom.booksList.addEventListener('dblclick', function (event) {
+        event.preventDefault();
+        const bookImage = event.target.offsetParent; // offsetParent gives access to parent's container (here <a>). Otherwise, the click gives <img> (event.target is <img>) not <a>, which makes impossible to add class 'favorite' to the book
+        if (bookImage.classList.contains(select.bookProperties.image)) {
+          const favoriteBook = bookImage.classList.contains(classNames.book.favoriteBook);
+          if (!favoriteBook) {
+            bookImage.classList.add(classNames.book.favoriteBook);
+            thisBooksList.favoriteBooks.push(bookImage);
+          } else {
+            bookImage.classList.remove(classNames.book.favoriteBook);
+            thisBooksList.favoriteBooks.splice(thisBooksList.favoriteBooks.indexOf(bookImage), 1);
           }
-          console.log(thisBooksList.favouriteBooks);
-        });
-        const form = document.querySelector(select.form);
-        form.addEventListener('click', function (event) {
-          //event.preventDefault();
-          const checkbox = event.target;
-          //console.log(checkbox);
-          if (checkbox.tagName === 'INPUT' && checkbox.type === 'checkbox' && checkbox.name === 'filter') {
-            // console.log(checkbox.value);
-            if (checkbox.checked === true) {
-              filters.push(checkbox.value);
-            } else if (checkbox.checked === false) {
-              filters.splice(filters.indexOf(checkbox.value), 1);
-            }
+        }
+      });
+
+      thisBooksList.dom.form.addEventListener('click', function (event) {
+        //event.preventDefault();
+        const checkbox = event.target;
+        if (checkbox.tagName === 'INPUT' && checkbox.type === 'checkbox' && checkbox.name === 'filter') {
+          if (checkbox.checked === true) {
+            thisBooksList.filters.push(checkbox.value);
+          } else if (checkbox.checked === false) {
+            thisBooksList.filters.splice(thisBooksList.filters.indexOf(checkbox.value), 1);
           }
-          // console.log(filters);
-        });
-      }
-      thisBooksList.filterBooks();
-    };
-
-
+        }
+        thisBooksList.filterBooks();
+      });
+    }
 
     filterBooks() {
       const thisBooksList = this;
       for (let book of thisBooksList.data) {
         let shouldBeHidden = false;
         const bookImage = document.querySelector('.book__image[data-id="' + book.id + '"]');
-
+        /* check if checked filter in array filteres matches book data */
         for (let filter of thisBooksList.filters) {
           if (!book.details[filter]) {
             shouldBeHidden = true;
-
+            break; // to stop the loop if the first condition is not met
           }
         }
         /* check shouldBeHidden value */
@@ -134,10 +121,13 @@
         }
       }
     }
+
     determineRatingBgc(rating) {
+      // eslint-disable-next-line no-unused-vars
+      const thisBooksList = this;
 
       let background = '';
-
+      /* set rating bar background depending on rating*/
       if (rating < 6) {
         background = 'linear-gradient(to bottom, #fefcea 0%, #f1da36 100%)';
       } else if (rating > 6 && rating <= 8) {
@@ -151,6 +141,7 @@
     }
   }
 
-
+  // eslint-disable-next-line no-unused-vars
   const app = new BooksList();
+
 }

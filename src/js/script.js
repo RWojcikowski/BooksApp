@@ -100,7 +100,7 @@
         thisBooksList.filterBooks();
       });
     }
-
+    /*filter books */
     filterBooks() {
       const thisBooksList = this;
       for (let book of thisBooksList.data) {

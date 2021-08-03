@@ -74,7 +74,11 @@
       const thisBooksList = this;
       thisBooksList.dom.booksList.addEventListener('dblclick', function (event) {
         event.preventDefault();
+<<<<<<< HEAD
         const bookImage = event.target.offsetParent;
+=======
+        const bookImage = event.target.offsetParent;
+>>>>>>> 36853ea30828a87f9ba068fe227c4625eea146d4
         if (bookImage.classList.contains(select.bookProperties.image)) {
           const favoriteBook = bookImage.classList.contains(classNames.book.favoriteBook);
           if (!favoriteBook) {
@@ -88,7 +92,11 @@
       });
 
       thisBooksList.dom.form.addEventListener('click', function (event) {
+<<<<<<< HEAD
         event.preventDefault();
+=======
+        //event.preventDefault();
+>>>>>>> 36853ea30828a87f9ba068fe227c4625eea146d4
         const checkbox = event.target;
         if (checkbox.tagName === 'INPUT' && checkbox.type === 'checkbox' && checkbox.name === 'filter') {
           if (checkbox.checked === true) {
@@ -100,7 +108,11 @@
         thisBooksList.filterBooks();
       });
     }
+<<<<<<< HEAD
     /*filter books */
+=======
+
+>>>>>>> 36853ea30828a87f9ba068fe227c4625eea146d4
     filterBooks() {
       const thisBooksList = this;
       for (let book of thisBooksList.data) {
@@ -110,7 +122,11 @@
         for (let filter of thisBooksList.filters) {
           if (!book.details[filter]) {
             shouldBeHidden = true;
+<<<<<<< HEAD
             break;
+=======
+
+>>>>>>> 36853ea30828a87f9ba068fe227c4625eea146d4
           }
         }
 
@@ -123,6 +139,7 @@
     }
 
     determineRatingBgc(rating) {
+
 
       let background = '';
 

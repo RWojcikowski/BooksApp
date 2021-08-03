@@ -57,11 +57,8 @@
         };
 
         const generatedHTML = templates.bookLink(bookData);
-        /* create element using utils.createDOMFromHTML */
         thisBooksList.element = utils.createDOMFromHTML(generatedHTML);
-        /* find books list container */
         const booksList = document.querySelector(select.listOf.books);
-        /* add element to list */
         booksList.appendChild(thisBooksList.element);
       }
     }
